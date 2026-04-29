@@ -58,7 +58,7 @@ fun MethodologyScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-            .padding(16.dp)
+            .padding(horizontal = 8.dp, vertical = 6.dp)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -68,11 +68,11 @@ fun MethodologyScreen() {
             Text(
                 text = "Vedic Math",
                 color = Color(0xFFFFD700),
-                fontSize = 18.sp,
+                fontSize = 11.sp,
                 fontWeight = FontWeight.Bold
             )
 
-            Row {
+            Row(horizontalArrangement = Arrangement.spacedBy(1.dp)) {
                 HeaderLink("LESSON") {
                     popupTitle = "LESSON"
                     popupContent = lesson
@@ -91,11 +91,11 @@ fun MethodologyScreen() {
             }
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             CompactVedicField(
                 value = num1,
@@ -112,57 +112,54 @@ fun MethodologyScreen() {
             )
         }
 
-        Spacer(modifier = Modifier.height(14.dp))
-
-        Text(
-            text = "Choose Method",
-            color = Color(0xFFFFD700),
-            fontSize = 13.sp,
-            fontWeight = FontWeight.Bold
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .horizontalScroll(rememberScrollState()),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            SolveChip(
-                text = "AUTO",
-                selected = solveMode == SolveMode.AUTO
-            ) { solveMode = SolveMode.AUTO }
-
-            SolveChip(
-                text = "USE #1",
-                selected = solveMode == SolveMode.USE_NUMBER_1
-            ) { solveMode = SolveMode.USE_NUMBER_1 }
-
-            SolveChip(
-                text = "USE #2",
-                selected = solveMode == SolveMode.USE_NUMBER_2
-            ) { solveMode = SolveMode.USE_NUMBER_2 }
-
-            SolveChip(
-                text = "V&C",
-                selected = solveMode == SolveMode.VERTICAL_CROSSWISE
-            ) { solveMode = SolveMode.VERTICAL_CROSSWISE }
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = "AUTO suggests a split. USE #1 and USE #2 let students compare.",
-            color = Color.Gray,
-            fontSize = 12.sp
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Choose:",
+                color = Color(0xFFFFD700),
+                fontSize = 10.sp,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(modifier = Modifier.width(4.dp))
+
+            Row(
+                modifier = Modifier
+                    .weight(1f)
+                    .horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(3.dp)
+            ) {
+                SolveChip(
+                    text = "AUTO",
+                    selected = solveMode == SolveMode.AUTO
+                ) { solveMode = SolveMode.AUTO }
+
+                SolveChip(
+                    text = "1",
+                    selected = solveMode == SolveMode.USE_NUMBER_1
+                ) { solveMode = SolveMode.USE_NUMBER_1 }
+
+                SolveChip(
+                    text = "2",
+                    selected = solveMode == SolveMode.USE_NUMBER_2
+                ) { solveMode = SolveMode.USE_NUMBER_2 }
+
+                SolveChip(
+                    text = "V&C",
+                    selected = solveMode == SolveMode.VERTICAL_CROSSWISE
+                ) { solveMode = SolveMode.VERTICAL_CROSSWISE }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(3.dp)
         ) {
             Button(
                 onClick = {
@@ -179,13 +176,15 @@ fun MethodologyScreen() {
                 },
                 modifier = Modifier
                     .weight(1f)
-                    .height(50.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD700))
+                    .height(34.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD700)),
+                contentPadding = PaddingValues(horizontal = 2.dp, vertical = 0.dp)
             ) {
                 Text(
-                    text = "CALCULATE",
+                    text = "CALC",
                     color = Color.Black,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 10.sp
                 )
             }
 
@@ -199,18 +198,20 @@ fun MethodologyScreen() {
                 },
                 modifier = Modifier
                     .weight(1f)
-                    .height(50.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD700))
+                    .height(34.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD700)),
+                contentPadding = PaddingValues(horizontal = 2.dp, vertical = 0.dp)
             ) {
                 Text(
-                    text = "CLEAR",
+                    text = "CLR",
                     color = Color.Black,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 10.sp
                 )
             }
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(5.dp))
 
         Box(
             modifier = Modifier
@@ -218,7 +219,7 @@ fun MethodologyScreen() {
                 .weight(1f)
                 .background(Color(0xFF111111))
                 .border(1.dp, Color(0xFFFFD700).copy(alpha = 0.25f))
-                .padding(16.dp)
+                .padding(8.dp)
         ) {
             Column(
                 modifier = Modifier.verticalScroll(rememberScrollState())
@@ -226,96 +227,61 @@ fun MethodologyScreen() {
                 Text(
                     text = "ANSWER: ${result?.finalAnswer ?: 0}",
                     color = Color(0xFFFFD700),
-                    fontSize = 22.sp,
+                    fontSize = 15.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Monospace
                 )
 
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(4.dp))
 
                 if (result == null) {
                     Text(
                         text = statusText,
                         color = Color.White,
-                        fontSize = 18.sp,
+                        fontSize = 12.sp,
+                        lineHeight = 16.sp,
                         fontFamily = FontFamily.Monospace
                     )
                 } else {
                     Text(
-                        text = "Method: ${result?.methodLabel.orEmpty()}",
-                        color = Color.Gray,
-                        fontSize = 14.sp
-                    )
-
-                    if (!result?.note.isNullOrBlank()) {
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(
-                            text = result?.note.orEmpty(),
-                            color = Color.Gray,
-                            fontSize = 13.sp
-                        )
-                    }
-
-                    Divider(
-                        modifier = Modifier.padding(vertical = 12.dp),
-                        color = Color(0xFFFFD700).copy(alpha = 0.20f)
-                    )
-
-                    Text(
-                        text = "Vedic One-Line",
-                        color = Color(0xFFFFD700),
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    Spacer(modifier = Modifier.height(6.dp))
-
-                    Text(
                         text = result?.vedicLine.orEmpty(),
                         color = Color.White,
-                        fontSize = 20.sp,
-                        lineHeight = 28.sp,
+                        fontSize = 14.sp,
+                        lineHeight = 18.sp,
                         fontFamily = FontFamily.Monospace
                     )
 
                     Divider(
-                        modifier = Modifier.padding(vertical = 12.dp),
+                        modifier = Modifier.padding(vertical = 6.dp),
                         color = Color(0xFFFFD700).copy(alpha = 0.20f)
                     )
 
                     Text(
-                        text = "Grade School",
-                        color = Color(0xFFFFD700),
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    Spacer(modifier = Modifier.height(6.dp))
-
-                    Text(
                         text = result?.gradeSchoolLines?.joinToString("\n").orEmpty(),
                         color = Color.White,
-                        fontSize = 20.sp,
-                        lineHeight = 28.sp,
+                        fontSize = 14.sp,
+                        lineHeight = 18.sp,
                         fontFamily = FontFamily.Monospace
                     )
                 }
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(5.dp))
 
         Button(
             onClick = { activity?.finish() },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(48.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD700))
+                .height(32.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD700)),
+            contentPadding = PaddingValues(horizontal = 2.dp, vertical = 0.dp)
         ) {
             Text(
                 text = "RETURN",
                 color = Color.Black,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                fontSize = 10.sp
             )
         }
     }
@@ -330,15 +296,15 @@ fun MethodologyScreen() {
                 color = Color(0xFF0A0A0A),
                 border = BorderStroke(1.dp, Color(0xFFFFD700))
             ) {
-                Column(modifier = Modifier.padding(16.dp)) {
+                Column(modifier = Modifier.padding(10.dp)) {
                     Text(
                         text = popupTitle,
                         color = Color(0xFFFFD700),
                         fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp
+                        fontSize = 16.sp
                     )
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(6.dp))
 
                     Column(
                         modifier = Modifier
@@ -348,22 +314,24 @@ fun MethodologyScreen() {
                         Text(
                             text = popupContent,
                             color = Color.White,
-                            fontSize = 18.sp,
-                            lineHeight = 26.sp,
+                            fontSize = 14.sp,
+                            lineHeight = 20.sp,
                             fontFamily = FontFamily.Monospace
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(6.dp))
 
                     Button(
                         onClick = { showPopup = false },
                         modifier = Modifier.align(Alignment.End),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD700))
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD700)),
+                        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp)
                     ) {
                         Text(
                             text = "CLOSE",
-                            color = Color.Black
+                            color = Color.Black,
+                            fontSize = 10.sp
                         )
                     }
                 }
@@ -377,10 +345,11 @@ fun HeaderLink(text: String, onClick: () -> Unit) {
     Text(
         text = text,
         color = Color(0xFFFFD700),
-        fontSize = 14.sp,
+        fontSize = 11.sp,
+        fontWeight = FontWeight.Bold,
         modifier = Modifier
             .clickable { onClick() }
-            .padding(6.dp)
+            .padding(horizontal = 2.dp, vertical = 1.dp)
     )
 }
 
@@ -395,19 +364,19 @@ fun SolveChip(
             .border(
                 width = 1.dp,
                 color = if (selected) Color(0xFFFFD700) else Color(0xFF555555),
-                shape = RoundedCornerShape(20.dp)
+                shape = RoundedCornerShape(14.dp)
             )
             .background(
                 color = if (selected) Color(0x33FFD700) else Color.Transparent,
-                shape = RoundedCornerShape(20.dp)
+                shape = RoundedCornerShape(14.dp)
             )
             .clickable { onClick() }
-            .padding(horizontal = 12.dp, vertical = 8.dp)
+            .padding(horizontal = 6.dp, vertical = 3.dp)
     ) {
         Text(
             text = text,
             color = if (selected) Color(0xFFFFD700) else Color.White,
-            fontSize = 13.sp,
+            fontSize = 9.sp,
             fontWeight = FontWeight.Bold
         )
     }
@@ -431,14 +400,14 @@ fun CompactVedicField(
             Text(
                 text = label,
                 color = Color(0xFFFFD700),
-                fontSize = 11.sp
+                fontSize = 9.sp
             )
         },
-        modifier = modifier.height(64.dp),
+        modifier = modifier.height(58.dp),
         singleLine = true,
         textStyle = TextStyle(
             color = Color.White,
-            fontSize = 18.sp,
+            fontSize = 13.sp,
             fontWeight = FontWeight.Bold
         ),
         colors = OutlinedTextFieldDefaults.colors(
