@@ -1,3 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Vedic Math</string>
+
+    <!-- App / screen titles -->
+    <string name="app_name">2-Digit Multiplication</string>
+    <string name="screen_title">2-Digit Multiplication</string>
+    <string name="screen_subtitle">Solve 2-digit multiplication using shortcut or standard methods.</string>
+
+    <!-- Input labels / hints -->
+    <string name="label_first_number">First number</string>
+    <string name="label_second_number">Second number</string>
+    <string name="hint_first_number">Enter 10–99</string>
+    <string name="hint_second_number">Enter 10–99</string>
+    <string name="helper_input_range">Enter two 2-digit numbers (10–99).</string>
+
+    <!-- Top info/help -->
+    <string name="button_how_it_works">HOW IT WORKS</string>
+    <string name="dialog_how_it_works_title">How It Works</string>
+    <string name="dialog_how_it_works_message">Enter two 2-digit numbers. Choose Auto to let the app select the best method. Choose Standard to see the general multiplication method.</string>
+    <string name="button_close">CLOSE</string>
+
+    <!-- Method buttons -->
+    <string name="button_auto">AUTO</string>
+    <string name="button_standard">STANDARD</string>
+    <string name="helper_method_choice">Auto chooses the best method. Standard shows the general method.</string>
+
+    <!-- Action buttons -->
+    <string name="button_calculate">CALCULATE</string>
+    <string name="button_clear">CLEAR</string>
+
+    <!-- Result area -->
+    <string name="label_answer">ANSWER</string>
+    <string name="label_method_used">Method used</string>
+    <string name="method_auto">Auto</string>
+    <string name="method_standard">Standard</string>
+    <string name="label_breakdown">Breakdown</string>
+    <string name="result_method_used">Method used: %1$s</string>
+
+    <!-- Validation / errors -->
+    <string name="error_invalid_input">Please enter two 2-digit numbers (10–99).</string>
+    <string name="error_empty_input">Both numbers are required.</string>
+    <string name="error_non_numeric">Please enter numbers only.</string>
+
+    <!-- Accessibility / content descriptions -->
+    <string name="cd_first_number">First number input</string>
+    <string name="cd_second_number">Second number input</string>
+    <string name="cd_how_it_works">How it works</string>
+    <string name="cd_auto">Auto method</string>
+    <string name="cd_standard">Standard method</string>
+    <string name="cd_calculate">Calculate result</string>
+    <string name="cd_clear">Clear inputs and result</string>
+    <string name="cd_menu">Menu</string>
+
 </resources>

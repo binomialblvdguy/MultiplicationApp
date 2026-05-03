@@ -24,13 +24,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.multiplication.two_digit.R
 import com.multiplication.two_digit.SolveMode
 import com.multiplication.two_digit.VedicLogic
 import com.multiplication.two_digit.VedicResult
@@ -50,15 +53,20 @@ fun MethodologyScreen() {
     var popupTitle by remember { mutableStateOf("") }
     var popupContent by remember { mutableStateOf("") }
 
-    val lesson = remember { loadAsset(context, "lesson_notes.md") }
-    val rules = remember { loadAsset(context, "legend_rules.md") }
-    val ratios = remember { loadAsset(context, "2x3.md") }
+    val howItWorks = remember {
+        val assetText = loadAsset(context, "legend_rules.md")
+        if (assetText == "File legend_rules.md not found.") {
+            context.getString(R.string.dialog_how_it_works_message)
+        } else {
+            assetText
+        }
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-            .padding(horizontal = 8.dp, vertical = 6.dp)
+            .padding(horizontal = 10.dp, vertical = 8.dp)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -66,125 +74,136 @@ fun MethodologyScreen() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Vedic Math",
+                text = stringResource(R.string.screen_title),
                 color = Color(0xFFFFD700),
-                fontSize = 11.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
 
-            Row(horizontalArrangement = Arrangement.spacedBy(1.dp)) {
-                HeaderLink("LESSON") {
-                    popupTitle = "LESSON"
-                    popupContent = lesson
-                    showPopup = true
-                }
-                HeaderLink("RULES") {
-                    popupTitle = "RULES"
-                    popupContent = rules
-                    showPopup = true
-                }
-                HeaderLink("2x3") {
-                    popupTitle = "2x3 RATIOS"
-                    popupContent = ratios
-                    showPopup = true
-                }
+            HeaderLink(
+                text = stringResource(R.string.button_how_it_works),
+                fontSize = 13.sp
+            ) {
+                popupTitle = context.getString(R.string.dialog_how_it_works_title)
+                popupContent = howItWorks
+                showPopup = true
             }
         }
 
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             CompactVedicField(
                 value = num1,
-                label = "Number 1",
+                label = stringResource(R.string.label_first_number),
                 modifier = Modifier.weight(1f),
-                onValueChange = { num1 = it }
+                onValueChange = {
+                    num1 = it
+                    result = null
+                    statusText = "Ready!"
+                }
             )
 
             CompactVedicField(
                 value = num2,
-                label = "Number 2",
+                label = stringResource(R.string.label_second_number),
                 modifier = Modifier.weight(1f),
-                onValueChange = { num2 = it }
+                onValueChange = {
+                    num2 = it
+                    result = null
+                    statusText = "Ready!"
+                }
             )
         }
 
         Spacer(modifier = Modifier.height(4.dp))
+
+        Text(
+            text = stringResource(R.string.helper_input_range),
+            color = Color(0xFFFFD700),
+            fontSize = 11.sp
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Choose:",
+                text = "Method:",
                 color = Color(0xFFFFD700),
-                fontSize = 10.sp,
+                fontSize = 12.sp,
                 fontWeight = FontWeight.Bold
             )
 
-            Spacer(modifier = Modifier.width(4.dp))
+            Spacer(modifier = Modifier.width(6.dp))
 
             Row(
                 modifier = Modifier
                     .weight(1f)
                     .horizontalScroll(rememberScrollState()),
-                horizontalArrangement = Arrangement.spacedBy(3.dp)
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 SolveChip(
-                    text = "AUTO",
-                    selected = solveMode == SolveMode.AUTO
-                ) { solveMode = SolveMode.AUTO }
+                    text = stringResource(R.string.button_auto),
+                    selected = solveMode == SolveMode.AUTO,
+                    fontSize = 11.sp
+                ) {
+                    solveMode = SolveMode.AUTO
+                }
 
                 SolveChip(
-                    text = "1",
-                    selected = solveMode == SolveMode.USE_NUMBER_1
-                ) { solveMode = SolveMode.USE_NUMBER_1 }
-
-                SolveChip(
-                    text = "2",
-                    selected = solveMode == SolveMode.USE_NUMBER_2
-                ) { solveMode = SolveMode.USE_NUMBER_2 }
-
-                SolveChip(
-                    text = "V&C",
-                    selected = solveMode == SolveMode.VERTICAL_CROSSWISE
-                ) { solveMode = SolveMode.VERTICAL_CROSSWISE }
+                    text = stringResource(R.string.button_standard),
+                    selected = solveMode == SolveMode.STANDARD,
+                    fontSize = 11.sp
+                ) {
+                    solveMode = SolveMode.STANDARD
+                }
             }
         }
 
         Spacer(modifier = Modifier.height(4.dp))
 
+        Text(
+            text = stringResource(R.string.helper_method_choice),
+            color = Color(0xFFFFD700),
+            fontSize = 11.sp
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(3.dp)
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             Button(
                 onClick = {
-                    val a = num1.toLongOrNull()
-                    val b = num2.toLongOrNull()
+                    val a = num1.toIntOrNull()
+                    val b = num2.toIntOrNull()
 
-                    if (a == null || b == null) {
+                    if (a == null || b == null || a !in 10..99 || b !in 10..99) {
                         result = null
-                        statusText = "Enter two whole numbers."
+                        statusText = context.getString(R.string.error_invalid_input)
                     } else {
-                        result = VedicLogic.calculate(a, b, solveMode)
+                        result = VedicLogic.calculate(a.toLong(), b.toLong(), solveMode)
                         statusText = ""
                     }
                 },
                 modifier = Modifier
                     .weight(1f)
-                    .height(34.dp),
+                    .height(42.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD700)),
-                contentPadding = PaddingValues(horizontal = 2.dp, vertical = 0.dp)
+                contentPadding = PaddingValues(horizontal = 4.dp, vertical = 0.dp)
             ) {
                 Text(
-                    text = "CALC",
+                    text = stringResource(R.string.button_calculate),
                     color = Color.Black,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 10.sp
+                    fontSize = 12.sp
                 )
             }
 
@@ -198,90 +217,104 @@ fun MethodologyScreen() {
                 },
                 modifier = Modifier
                     .weight(1f)
-                    .height(34.dp),
+                    .height(42.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD700)),
-                contentPadding = PaddingValues(horizontal = 2.dp, vertical = 0.dp)
+                contentPadding = PaddingValues(horizontal = 4.dp, vertical = 0.dp)
             ) {
                 Text(
-                    text = "CLR",
+                    text = stringResource(R.string.button_clear),
                     color = Color.Black,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 10.sp
+                    fontSize = 12.sp
                 )
             }
         }
 
-        Spacer(modifier = Modifier.height(5.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
                 .background(Color(0xFF111111))
-                .border(1.dp, Color(0xFFFFD700).copy(alpha = 0.25f))
-                .padding(8.dp)
+                .border(1.dp, Color(0xFFFFD700).copy(alpha = 0.35f))
+                .padding(10.dp)
         ) {
             Column(
                 modifier = Modifier.verticalScroll(rememberScrollState())
             ) {
                 Text(
-                    text = "ANSWER: ${result?.finalAnswer ?: 0}",
+                    text = "${stringResource(R.string.label_answer)}: ${result?.finalAnswer ?: 0}",
                     color = Color(0xFFFFD700),
-                    fontSize = 15.sp,
+                    fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Monospace
                 )
 
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(6.dp))
+
+                val methodLabel = result?.methodLabel ?: when (solveMode) {
+                    SolveMode.AUTO -> stringResource(R.string.method_auto)
+                    SolveMode.STANDARD -> stringResource(R.string.method_standard)
+                }
+
+                Text(
+                    text = stringResource(R.string.result_method_used, methodLabel),
+                    color = Color(0xFFFFD700),
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Spacer(modifier = Modifier.height(6.dp))
 
                 if (result == null) {
                     Text(
                         text = statusText,
                         color = Color.White,
-                        fontSize = 12.sp,
-                        lineHeight = 16.sp,
+                        fontSize = 14.sp,
+                        lineHeight = 18.sp,
                         fontFamily = FontFamily.Monospace
                     )
                 } else {
                     Text(
                         text = result?.vedicLine.orEmpty(),
                         color = Color.White,
-                        fontSize = 14.sp,
-                        lineHeight = 18.sp,
+                        fontSize = 15.sp,
+                        lineHeight = 20.sp,
                         fontFamily = FontFamily.Monospace
                     )
 
                     Divider(
-                        modifier = Modifier.padding(vertical = 6.dp),
+                        modifier = Modifier.padding(vertical = 8.dp),
                         color = Color(0xFFFFD700).copy(alpha = 0.20f)
                     )
 
                     Text(
                         text = result?.gradeSchoolLines?.joinToString("\n").orEmpty(),
                         color = Color.White,
-                        fontSize = 14.sp,
-                        lineHeight = 18.sp,
+                        fontSize = 15.sp,
+                        lineHeight = 20.sp,
                         fontFamily = FontFamily.Monospace
                     )
                 }
             }
         }
 
-        Spacer(modifier = Modifier.height(5.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         Button(
             onClick = { activity?.finish() },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(32.dp),
+                .height(40.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD700)),
-            contentPadding = PaddingValues(horizontal = 2.dp, vertical = 0.dp)
+            contentPadding = PaddingValues(horizontal = 4.dp, vertical = 0.dp)
         ) {
             Text(
                 text = "RETURN",
                 color = Color.Black,
                 fontWeight = FontWeight.Bold,
-                fontSize = 10.sp
+                fontSize = 12.sp
             )
         }
     }
@@ -292,19 +325,19 @@ fun MethodologyScreen() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(0.85f),
-                shape = RoundedCornerShape(8.dp),
+                shape = RoundedCornerShape(10.dp),
                 color = Color(0xFF0A0A0A),
                 border = BorderStroke(1.dp, Color(0xFFFFD700))
             ) {
-                Column(modifier = Modifier.padding(10.dp)) {
+                Column(modifier = Modifier.padding(12.dp)) {
                     Text(
                         text = popupTitle,
                         color = Color(0xFFFFD700),
                         fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp
+                        fontSize = 18.sp
                     )
 
-                    Spacer(modifier = Modifier.height(6.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
 
                     Column(
                         modifier = Modifier
@@ -314,24 +347,25 @@ fun MethodologyScreen() {
                         Text(
                             text = popupContent,
                             color = Color.White,
-                            fontSize = 14.sp,
-                            lineHeight = 20.sp,
+                            fontSize = 15.sp,
+                            lineHeight = 22.sp,
                             fontFamily = FontFamily.Monospace
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(6.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
 
                     Button(
                         onClick = { showPopup = false },
                         modifier = Modifier.align(Alignment.End),
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD700)),
-                        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp)
+                        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp)
                     ) {
                         Text(
-                            text = "CLOSE",
+                            text = stringResource(R.string.button_close),
                             color = Color.Black,
-                            fontSize = 10.sp
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold
                         )
                     }
                 }
@@ -341,15 +375,19 @@ fun MethodologyScreen() {
 }
 
 @Composable
-fun HeaderLink(text: String, onClick: () -> Unit) {
+fun HeaderLink(
+    text: String,
+    fontSize: TextUnit = 13.sp,
+    onClick: () -> Unit
+) {
     Text(
         text = text,
         color = Color(0xFFFFD700),
-        fontSize = 11.sp,
+        fontSize = fontSize,
         fontWeight = FontWeight.Bold,
         modifier = Modifier
             .clickable { onClick() }
-            .padding(horizontal = 2.dp, vertical = 1.dp)
+            .padding(horizontal = 3.dp, vertical = 2.dp)
     )
 }
 
@@ -357,6 +395,7 @@ fun HeaderLink(text: String, onClick: () -> Unit) {
 fun SolveChip(
     text: String,
     selected: Boolean,
+    fontSize: TextUnit = 11.sp,
     onClick: () -> Unit
 ) {
     Box(
@@ -364,19 +403,19 @@ fun SolveChip(
             .border(
                 width = 1.dp,
                 color = if (selected) Color(0xFFFFD700) else Color(0xFF555555),
-                shape = RoundedCornerShape(14.dp)
+                shape = RoundedCornerShape(16.dp)
             )
             .background(
                 color = if (selected) Color(0x33FFD700) else Color.Transparent,
-                shape = RoundedCornerShape(14.dp)
+                shape = RoundedCornerShape(16.dp)
             )
             .clickable { onClick() }
-            .padding(horizontal = 6.dp, vertical = 3.dp)
+            .padding(horizontal = 10.dp, vertical = 6.dp)
     ) {
         Text(
             text = text,
             color = if (selected) Color(0xFFFFD700) else Color.White,
-            fontSize = 9.sp,
+            fontSize = fontSize,
             fontWeight = FontWeight.Bold
         )
     }
@@ -392,7 +431,7 @@ fun CompactVedicField(
     OutlinedTextField(
         value = value,
         onValueChange = { input ->
-            if (input.all { it.isDigit() }) {
+            if (input.all { it.isDigit() } && input.length <= 2) {
                 onValueChange(input)
             }
         },
@@ -400,19 +439,23 @@ fun CompactVedicField(
             Text(
                 text = label,
                 color = Color(0xFFFFD700),
-                fontSize = 9.sp
+                fontSize = 11.sp
             )
         },
-        modifier = modifier.height(58.dp),
+        modifier = modifier.height(68.dp),
         singleLine = true,
         textStyle = TextStyle(
             color = Color.White,
-            fontSize = 13.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Bold
         ),
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = Color(0xFFFFD700),
-            unfocusedBorderColor = Color(0xFF444444)
+            unfocusedBorderColor = Color(0xFF444444),
+            focusedTextColor = Color.White,
+            unfocusedTextColor = Color.White,
+            focusedLabelColor = Color(0xFFFFD700),
+            unfocusedLabelColor = Color(0xFFFFD700)
         ),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
     )
